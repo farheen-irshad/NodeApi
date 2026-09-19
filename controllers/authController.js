@@ -1,5 +1,6 @@
 import userModel from "../models/userModels.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 import { accessToken , refreshToken} from "../services/tokenService.js"
 
 export const signup = async (req, res) =>{
@@ -71,6 +72,26 @@ export const login = async (req, res) =>{
         
     }
 }
+    export const refresh = async (req, res) =>{
+    try {
+           const ref = req.cookies.refToken
+           const match  = jwt.verify(ref, process.env.REFRESH_SECRET)
+           console.log(match)
+
+           if(!match){
+            return  res.status(400).json({msg:"invalid refresh token"})
+           }
+         
+         const acc =  jwt.sign({id:
+      match.id, email:match.email}, process.env.ACCESS_SECRET, {expiresIn:"15m"})
+
+      res.status(200).json({msg : "new access token generated" , acc:accessToken})
+        
+    } catch (error) {
+        res.status(400).json({msg:"cookie error"})
+    }
+}
+
 
 export const logout = async (req, res) =>{
     try {
