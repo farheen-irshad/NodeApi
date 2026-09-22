@@ -5,7 +5,7 @@ export const accessToken = async(payload) => {
               console.log(payload)
             return await jwt.sign({
                 id:payload._id,
-                email:payload.email} , process.env.ACCESS_SECRET , {expiresIn : "15m"})
+                email:payload.email} , process.env.ACCESS_SECRET , {expiresIn : "15s"})
        }
        catch(error){
               console.log(error)

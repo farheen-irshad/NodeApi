@@ -95,9 +95,10 @@ export const login = async (req, res) =>{
 
 export const logout = async (req, res) =>{
     try {
-        
+        res.clearCookie("refToken")
+        res.status(200).json({msg:"Login Successfull"})
         
     } catch (error) {
-        
+         res.status(400).json({msg:"Invalid Token"})
     }
 }
